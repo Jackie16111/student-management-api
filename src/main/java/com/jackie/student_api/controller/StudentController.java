@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
+
 
 @RestController
 @RequestMapping("/students")
@@ -79,8 +81,9 @@ public class StudentController {
     @GetMapping("/page")
     public Page<Student> getStudentsPage(
             @RequestParam int page,
-            @RequestParam int size) {
-
-        return studentService.getStudentsWithPagination(page, size);
+            @RequestParam int size,
+            @RequestParam String sort)
+    {
+        return studentService.getStudentsWithPagination(page, size, sort);
     }
 }

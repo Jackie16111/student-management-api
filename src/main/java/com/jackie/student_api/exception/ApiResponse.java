@@ -20,9 +20,9 @@ public class ApiResponse<T>
     }
 
     // Getters
-    public boolean isSuccess() { return success; }
-    public String getMessage() { return message; }
-    public List<String> getErrors() { return errors; }
-    public int getStatus() { return status; }
-    public LocalDateTime getTimestamp() { return timestamp; }
+//    public boolean isSuccess() { return success; }
+//    public String getMessage() { return message; }
+//    public List<String> getErrors() { return errors; }
+//    public int getStatus() { return status; }
+//    public LocalDateTime getTimestamp() { return timestamp; }
 }

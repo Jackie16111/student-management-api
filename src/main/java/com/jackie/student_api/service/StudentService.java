@@ -5,6 +5,7 @@ import com.jackie.student_api.DTO.StudentDTO;
 import com.jackie.student_api.model.Student;
 import com.jackie.student_api.repository.StudentRepository;
 import com.jackie.student_api.result.Result;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -12,18 +13,19 @@ import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-@Service
-public class StudentService {
 
+@Service
+public class StudentService
+{
     private final StudentRepository repository;
     private static final Logger logger = LoggerFactory.getLogger(StudentService.class);
     public StudentService(StudentRepository repository) {
         this.repository = repository;
     }
 
-    public Page<Student> getStudentsWithPagination(int page, int size)
+    public Page<Student> getStudentsWithPagination(int page, int size,String sort)
     {
-        return repository.findAll(PageRequest.of(2, 10));
+        return repository.findAll(PageRequest.of(page, size, Sort.by(sort)));
     }
 
     // 🔵 ENTITY → DTO
