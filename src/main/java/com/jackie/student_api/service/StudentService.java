@@ -23,9 +23,17 @@ public class StudentService
         this.repository = repository;
     }
 
+
+    //Page and Sort
     public Page<Student> getStudentsWithPagination(int page, int size,String sort)
     {
         return repository.findAll(PageRequest.of(page, size, Sort.by(sort)));
+    }
+
+    //Search by name
+    public List<Student> searchStudentsByName(String name)
+    {
+        return repository.findByNameContainingIgnoreCase(name);
     }
 
     // 🔵 ENTITY → DTO
@@ -89,7 +97,7 @@ public class StudentService
         s.setName(dto.getName());
         s.setCourse(dto.getCourse());
         s.setAge(dto.getAge());
-                               
+
         repository.save(s);
 
         logger.info("Student updated successfully: {}", id);

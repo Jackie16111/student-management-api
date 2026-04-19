@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 
 
 @RestController
@@ -33,7 +32,6 @@ public class StudentController {
     public ResponseEntity<Result> addStudent(@Valid @RequestBody StudentDTO dto)
     {
         Result result = studentService.addStudent(dto);
-
         return result.isSuccess()
                 ? ResponseEntity.status(201).body(result)
                 : ResponseEntity.badRequest().body(result);
@@ -41,12 +39,9 @@ public class StudentController {
 
     // ✅ UPDATE
     @PutMapping("/{id}")
-    public ResponseEntity<Result> updateStudent(
-            @PathVariable int id,
-            @RequestBody StudentDTO dto) {
-
+    public ResponseEntity<Result> updateStudent(@PathVariable int id, @RequestBody StudentDTO dto)
+    {
         Result result = studentService.updateStudent(id, dto);
-
         return result.isSuccess()
                 ? ResponseEntity.ok(result)
                 : ResponseEntity.badRequest().body(result);
@@ -54,36 +49,39 @@ public class StudentController {
 
     // ✅ DELETE
     @DeleteMapping("/{id}")
-    public ResponseEntity<Result> deleteStudent(@PathVariable int id) {
-
+    public ResponseEntity<Result> deleteStudent(@PathVariable int id)
+    {
         Result result = studentService.deleteStudent(id);
-
         return result.isSuccess()
                 ? ResponseEntity.ok(result)
                 : ResponseEntity.badRequest().body(result);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<?>> getStudentById(@PathVariable int id) {
-
+    public ResponseEntity<ApiResponse<?>> getStudentById(@PathVariable int id)
+    {
         StudentDTO student = studentService.getStudentById(id);
-
-        if (student != null) {
-            return ResponseEntity.ok(
-                    new ApiResponse<>(200, "Student fetched successfully", student)
+        if (student != null)
+        {
+            return ResponseEntity.ok(new ApiResponse<>(200, "Student fetched successfully", student)
             );
-        } else {
-            return ResponseEntity.status(404).body(
-                    new ApiResponse<>(404, "Student not found", null)
+        }
+        else
+        {
+            return ResponseEntity.status(404).body(new ApiResponse<>(404, "Student not found", null)
             );
         }
     }
+
     @GetMapping("/page")
-    public Page<Student> getStudentsPage(
-            @RequestParam int page,
-            @RequestParam int size,
-            @RequestParam String sort)
+    public Page<Student> getStudentsPage(@RequestParam int page,@RequestParam int size,@RequestParam String sort)
     {
         return studentService.getStudentsWithPagination(page, size, sort);
+    }
+
+    @GetMapping("/search")
+    public List<Student> searchStudents(@RequestParam String name)
+    {
+        return studentService.searchStudentsByName(name);
     }
 }
